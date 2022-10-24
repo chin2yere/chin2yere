@@ -1,0 +1,214 @@
+//offor chinyere
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <chrono>
+#include <thread>
+using namespace std;
+string username1, username2, transfer_bank_name;
+int password1, password2;
+char reply, transaction_choice, what_bank, what_bill;
+double amount;
+double balance =100.00;
+
+
+int main() {
+  //account setup
+  cout<<"Welcome to fulton bank user\n"
+        "Please create a username\n (it must consist of letters only):  ";
+  cin>>username1;
+  //password creation
+  do{
+  cout<<"Please create a 4 digit password:\n ";
+  cin>>password1;
+  if(password1<1000||password1>9999){
+    cout<<"Password should be four digits only\n\n";
+  }else{
+  cout<<"Your account has been set up.\n";
+  }
+  }while(password1<1000||password1>9999);
+  //sucessful registration
+  cout<<"Your balance is $100\n"
+        "A negative balance indicates bank overdraft\n";
+  
+  cout<<"Would you like to process a transaction?\n"
+        "Y for yes\n"
+        "N for no\n"
+        "Your reply: ";
+  cin>>reply;
+  
+  //transaction
+  while(reply=='Y'||reply=='y'){
+    //sign in
+    do{
+      cout<<endl<<"Enter username: ";
+      cin>>username2;
+    
+      cout<<"Enter password: ";
+      cin>>password2;
+      //wrong username condition
+      if(username1!=username2||password1!=password2) {
+        cout<<"Invalid username or password\n";
+      
+    }else {
+      cout<<"proceeding to transaction page\n";
+      this_thread::sleep_for(chrono::milliseconds(1500));
+
+    }
+     }while(username1!=username2||password1!=password2); 
+  
+    cout<<"Please select transaction: \n"
+          "1] for withdrawal\n"
+          "2] for deposit\n"
+          "3] for transfer\n"
+          "4] for bill payment\n"
+          "your choice: ";
+    cin>>transaction_choice;
+    switch(transaction_choice){
+      //withdrawal
+      case '1':
+      cout<<"Enter withdrawal amount: ";
+      cin>> amount;
+      cout<<"processing....\n";
+      this_thread::sleep_for(chrono::milliseconds(1500));
+      balance-= amount;
+      cout<<"Transaction complete\n"
+            "Your balance is "<<balance;
+            this_thread::sleep_for(chrono::milliseconds(1500));
+      break;
+      //deposit
+      case '2':
+      cout<<"Enter deposit amount: ";
+      cin>> amount;
+      cout<<"processing...\n";
+      this_thread::sleep_for(chrono::milliseconds(1500));
+      balance += amount;
+      cout<<"Transaction complete\n"
+            "your balance is "<<balance;
+            this_thread::sleep_for(chrono::milliseconds(1500));
+      break;
+      //transfer
+      case '3':
+      cout<<"What bank would you like to transfer to?\n"
+            "press 1 for fulton bank\n"
+            "press 2 for other banks\n";
+      cin>> what_bank;
+      //if fulton bank
+      if(what_bank=='1'){
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"Enter transfer amount: ";
+        cin>>amount;
+        cout<<"You will not be charged a transfer fee for this\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        balance-=amount;
+        cout<<"Transfer sucessful\n"
+              "your balance is "<<balance;
+        break;
+        
+          //if not fulton bank
+      }
+      else{
+        cout<<"Enter recepient bank name: ";
+        cin>> transfer_bank_name;
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"you will be charged a 3 dollar fee\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"Enter transfer amount: ";
+        cin>> amount;
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        balance= (balance-amount)-3;
+        cout<<"Your transfer to "<<transfer_bank_name<<" was sucessful!\n";
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        cout<<"Your balance is "<<balance<<endl;
+        break;
+
+      }
+      this_thread::sleep_for(chrono::milliseconds(1500));
+      break;
+      //pay bills
+      case '4':
+      do{
+      cout<<"What bill would you like to pay?\n"
+            "press 1 for phone bill\n"
+            "press 2 for light bill\n"
+            "press 3 for water bill\n"
+            "press 4 for gas bill\n"
+            "your choice: ";
+      cin>>what_bill;
+      //phone bill
+      if(what_bill=='1'){
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        cout<<"How much would you like to pay? ";
+        cin>>amount;
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"We charge a 5 dollar fee for phone bill payment\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        balance-=balance-amount-5;
+        cout<<"Payment sucessful\nYour balance is "<<balance;
+        break;
+      }
+      //light bill
+      else if(what_bill=='2'){
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"How much would you like to pay? ";
+        cin>>amount;
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"We charge a 6 dollar fee for light bill payment\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        balance-=balance-amount-6;
+        cout<<"Payment sucessful\nYour balance is "<<balance;
+        break;
+      }
+      //water bill
+      else if(what_bill=='3'){
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"How much would you like to pay? ";
+        cin>>amount;
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"We charge a 3 dollar fee for water bill payment\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        balance-=balance-amount-3;
+        cout<<"Payment sucessful\nYour balance is "<<balance;
+        break;
+      }
+      //gas bill
+      else if(what_bill=='4'){
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"How much would you like to pay? ";
+        cin>>amount;
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"We charge a 2 dollar fee for gas bill payment\n";
+        this_thread::sleep_for(chrono::milliseconds(1500));
+        cout<<"processing...\n";
+        this_thread::sleep_for(chrono::milliseconds(2500));
+        balance-=balance-amount-2;
+        cout<<"Payment sucessful\nYour balance is "<<balance;
+        break;
+      }
+      //wrong selection
+      else {
+        cout<<"Please select from the options below.\n";
+      }
+
+      }while(what_bill!='1'||what_bill!='2'||what_bill!='3'||what_bill!='4');
+      this_thread::sleep_for(chrono::milliseconds(1500));
+    break;
+    }
+    cout<<endl<<"Would you like another transaction?\n"
+          "press Y for yes\n"
+          "press N for no\n"
+          "your answer: ";
+    cin>>reply;
+
+  }
+cout<<"Goodbye please take your card ";
+}
