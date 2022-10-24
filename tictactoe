@@ -1,0 +1,170 @@
+#include <iostream>
+#include <iomanip>
+#include <array>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+char player1, player2;
+
+char x[3][3]{{'-', '-', '-'},
+             {'-', '-', '-'},
+             {'-', '-', '-'}};
+void showTable(){
+  for(int i=0;i<=2;i++){
+    for(int j=0;j<=2;j++){
+      cout<<setw(3)<<x[i][j];
+    }
+    cout<<"\n";
+  }
+}
+//did someone win
+bool wins(char ch){
+  if(x[0][0]==ch && x[0][1]==ch && x[0][2]==ch || x[1][0]==ch&& x[1][1]==ch&& x[1][2]==ch || x[2][0]==ch&& x[2][1]==ch&& x[2][2]==ch || x[0][0]==ch&& x[1][0]==ch&& x[2][0]==ch || x[0][1]==ch&& x[1][1]==ch&& x[2][1]==ch || x[0][2]==ch&& x[1][2]==ch&& x[2][2]==ch|| x[0][0]==ch&& x[1][1]==ch&& x[2][2]==ch || x[2][0]==ch&& x[1][1]==ch&& x[0][2]==ch){
+  return true;
+}else{
+    return false;
+}
+  }
+  
+ //do you want x or o 
+  void x_or_o(){
+    
+    cout<<"Player 1, X or O: ";
+    cin>>player1;
+  
+    if(player1=='x'||player1=='X'){
+      player2='O';
+    }else if(player1=='o'||player1=='O'){
+      player2='X';
+      }
+    }
+//player 1 game
+  void begin_game1player(){
+    
+    int row, col;
+    int tries=0;
+    cout<<"Player 1 goes first\n";
+    
+    
+    
+    do{
+      cout<<"\n";
+    showTable();
+      do{
+    cout<<"Player 1? ";
+    cin>>row>>col;
+        if(row<0||row>2||col<0||col>2){
+          cout<<"Out of range\n";
+        }
+        if(x[row][col]==player1||x[row][col]==player2){
+          cout<<"Cell occupied\n";
+          }
+        
+        }while(x[row][col]==player1||x[row][col]==player2||row<0||row>2||col<0||col>2);
+      x[row][col]=player1;
+      showTable();
+      tries++;
+      wins(player1);
+      if(!wins(player1)){
+      cout<<"\n\n";
+    showTable();
+      
+    cout<<"Player 2? ";
+      do{
+    srand(time(0));
+  row=(rand()%3);
+    srand(time(0));
+  row=(rand()%3);
+      }while(x[row][col]==player1||x[row][col]==player2);
+      cout<<row<<" "<<col<<"\n";
+      x[row][col]=player2;
+      showTable();
+      tries++;
+      wins(player2);
+        }
+      }while(wins(player1)==false &&wins(player2)==false && tries<9);
+  if(wins(player1)){
+    cout<<"Player 1 wins\n";
+  }else if(wins(player2)){
+    cout<<"Player 2 wins\n";
+  }else if(!wins(player1) &&!wins(player2)&&tries==9){
+    cout<<"Nobody wins\n";
+  } //catch 
+  
+      }
+//player 2 game
+  void begin_game2players(){
+    int tries=0;
+    int row, col;
+    cout<<"Player 1 goes first\n";
+    
+    do{
+      cout<<"\n";
+    showTable();
+      do{
+    cout<<"Player 1? ";
+    cin>>row>>col;
+        if(row<0||row>2||col<0||col>2){
+          cout<<"Out of range\n";
+          }if(x[row][col]==player1||x[row][col]==player2){
+          cout<<"Cell occupied\n";
+          }
+        }while(x[row][col]==player1||x[row][col]==player2||row<0||row>2||col<0||col>2);
+      x[row][col]=player1;
+      showTable();
+      tries++;
+      wins(player1);
+      if(!wins(player1)){
+       cout<<"\n\n";
+    showTable();
+      do{
+    cout<<"Player 2? ";
+      
+    cin>>row>>col;
+       if(row<0||row>2||col<0||col>2){
+          cout<<"Out of range\n";
+          }if(x[row][col]==player1||x[row][col]==player2){
+          cout<<"Cell occupied\n";
+          } 
+        }while(x[row][col]==player1||x[row][col]==player2||row<0||row>2||col<0||col>2);
+      x[row][col]=player2;
+      showTable();
+      tries++;
+      wins(player2);
+        }
+      }while(wins(player1)==false &&wins(player2)==false && tries<9);
+  if(wins(player1)){
+    cout<<"Player 1 wins\n";
+  }else if(wins(player2)){
+    cout<<"Player 2 wins\n";
+  }else if(!wins(player1) &&!wins(player2)&&tries==9){
+    cout<<"Nobody wins\n";
+  }  
+  }
+//intro to the game
+void intro(){
+  char type;
+   
+    cout<<"Welcome to tic tac toe\n";
+    
+    cout<<"Please select 1 or 2 :\n"
+          "1. single player\n"
+          "2. double player\n"
+          "Your answer: ";
+    cin>>type;
+    
+    if(type=='1'){
+      
+      x_or_o();
+      begin_game1player();
+      //single player tins
+    }
+    else{
+      x_or_o();
+      begin_game2players();
+      //double player tins
+    }
+  }
+int main() {
+  intro();
+}
